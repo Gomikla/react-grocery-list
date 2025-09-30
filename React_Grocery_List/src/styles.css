@@ -1,3 +1,96 @@
+/* Global Styles */
+body {
+  background: #deedde;
+  font-family: "Alan Sans", sans-serif;
+}
+
+/* App Container */
+.center-top {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* List Container */
+.list-container {
+  border: 2px solid black;
+  padding: 0.5rem;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+  max-height: 500px;
+  overflow-y: auto;
+  margin: 0 auto;
+  box-shadow: #28482e 0px 4px 6px, rgba(0, 0, 0, 0.1) 0px 1px 3px;
+
+  scrollbar-width: inherit;
+  scrollbar-color: #355e3b #e6f2e6;
+}
+
+/* Todo List Styles */
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+/* Todo Item Styles */
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border: 2px solid black;
+  border-radius: 10px;
+  font-family: "Alan Sans", sans-serif;
+  box-shadow: #28482e 0px 2px 4px, rgba(0, 0, 0, 0.1) 0px 1px 2px;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+
+.todo-item.incomplete {
+  background: #db5461; /* red-ish for incomplete */
+}
+
+.todo-item.completed {
+  background: #588157; /* green for completed */
+}
+
+.todo-text {
+  flex: 1;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.todo-text.completed {
+  text-decoration: line-through;
+}
+
+.delete-btn {
+  background: rgba(255, 255, 255, 0.5);
+
+  border: 2px solid black;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  /* color: white; */
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.delete-btn:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* Form Container */
 .form-container {
   width: 100%;
   max-width: 400px;
@@ -20,84 +113,25 @@
   color: #062102;
   outline: none;
   transition: border 0.2s;
-  font-family: 'Alan Sans', sans-serif;
+  font-family: "Alan Sans", sans-serif;
 }
 
-.list-container {
-  border: 2px solid black;
-  padding: 0.5rem;
-  border-radius: 10px;
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
-  box-shadow: #28482E 0px 4px 6px, rgba(0, 0, 0, 0.1) 0px 1px 3px;
-}
 .add-btn {
   width: 50%;
   height: 2rem;
   border-radius: 10px;
   border: 1px solid #355e3b;
   background: #a3d9a5; /* soft, light green accent */
-  color: #28482E;
+  color: #28482e;
   font-weight: bold;
   font-size: 1.1rem;
   cursor: pointer;
   transition: background 0.2s;
   margin-top: 0.5rem;
-  box-shadow: #28482E 0px 2px 4px, rgba(0, 0, 0, 0.1) 0px 1px 2px;
-  font-family: 'Alan Sans', sans-serif;
+  box-shadow: #28482e 0px 2px 4px, rgba(0, 0, 0, 0.1) 0px 1px 2px;
+  font-family: "Alan Sans", sans-serif;
 }
 
 .add-btn:hover {
   background: #7bc47f;
-}
-body {
-  background: #DEEDDE;
-  font-family: 'Alan Sans', sans-serif;
-}
-
-.center-top {
-  position: fixed;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.card {
-  aspect-ratio: 1 / 1;
-  font-family: 'Alan Sans', sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
-  border: 1px solid black;
-  border-radius: 10px;
-  background: #355e3b;
-  color: #f0f0f0;
-  cursor: pointer;
-  box-shadow: #28482E 0px 4px 6px, rgba(0, 0, 0, 0.1) 0px 1px 3px;
-}
-
-.card:hover {
-  background: #2c4e2c;
-}
-
-.card-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  font-family: 'Alan Sans', sans-serif;
-  gap: 0.75rem;
-  padding: 0 0.5rem;
-}
-
-.row {
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  flex: 1;
-  cursor: pointer;
-}
-
-.card label, .row {
-  font-family: 'Roboto', Arial, sans-serif;
 }
