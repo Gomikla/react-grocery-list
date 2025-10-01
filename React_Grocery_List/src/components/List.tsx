@@ -1,34 +1,17 @@
 import { useState } from "react";
-import type { ShoppingItem } from "../types";
+import { FilterType, type ShoppingItem } from "../types";
 import ListItem from "./ListItem";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { messages } from "../messages";
+import Filter from "./Filter";
+import { addItem, filterAndSortItems } from "../utils/helpers";
 
 export default function List() {
   const [items, setItems] = useLocalStorage("shopping:list", []);
   const [input, setInput] = useState("");
+  const [filter, setFilter] = useState(FilterType.All);
 
-  const addItem = () => {
-    const trimmedInput = input.trim();
-    const newItem: ShoppingItem = {
-      id: Date.now().toString(),
-      text: trimmedInput,
-      completed: false,
-    };
-
-    if (!trimmedInput) {
-      alert(messages.emptyInputAlert);
-      return;
-    }
-
-    if (trimmedInput.length >= 25) {
-      alert(messages.longInputAlert);
-      return;
-    }
-
-    setItems((prevItems: ShoppingItem[]) => [newItem, ...prevItems]);
-    setInput("");
-  };
+  const filteredAndSortedItems = filterAndSortItems(items, filter);
 
   const onDelete = (id: string) => {
     setItems((prevItems: ShoppingItem[]) =>
@@ -38,7 +21,7 @@ export default function List() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    addItem();
+    addItem(input, setItems, setInput);
   };
 
   const onToggleComplete = (id: string) => {
@@ -49,19 +32,18 @@ export default function List() {
     );
   };
 
-  const sortedItems = items.sort((a: ShoppingItem, b: ShoppingItem) => {
-    if (a.completed === b.completed) return 0;
-    return a.completed ? 1 : -1; // incomplete first
-  });
-
   return (
-    <div>
+    <div className="app-container">
+      <div className="filter-container">
+        <Filter currentFilter={filter} onFilterChange={setFilter} />
+      </div>
+
       <div className="list-container">
         {items.length === 0 ? (
           <p>{messages.emptyList}</p>
         ) : (
           <div className="todo-list">
-            {sortedItems.map((item: ShoppingItem) => (
+            {filteredAndSortedItems.map((item: ShoppingItem) => (
               <ListItem
                 item={item}
                 onDelete={onDelete}

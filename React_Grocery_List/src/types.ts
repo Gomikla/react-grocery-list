@@ -5,3 +5,9 @@ export interface ShoppingItem {
   text: string;
   completed: boolean;
 }
+
+export const FilterType = {
+  All: "all",
+  Active: "active",
+  Completed: "completed",
+};
