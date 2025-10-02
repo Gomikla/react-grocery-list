@@ -18,7 +18,7 @@ export const addItem = (
     return;
   }
 
-  if (trimmedInput.length >= 25) {
+  if (trimmedInput.length > 50) {
     alert(messages.longInputAlert);
     return;
   }
