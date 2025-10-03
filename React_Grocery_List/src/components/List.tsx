@@ -1,17 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FilterType, type ShoppingItem } from "../types";
 import ListItem from "./ListItem";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { messages } from "../messages";
 import Filter from "./Filter";
 import { addItem, filterAndSortItems } from "../utils/helpers";
+import SearchBar from "./SearchBar";
 
 export default function List() {
   const [items, setItems] = useLocalStorage("shopping:list", []);
-  const [input, setInput] = useState("");
+  const [listItemInput, setListItemInput] = useState("");
   const [filter, setFilter] = useState(FilterType.All);
+  const [searchInput, setSearchInput] = useState("");
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-  const filteredAndSortedItems = filterAndSortItems(items, filter);
+  useEffect(() => {
+    const checkScreenSize = () => {
+      console.log("Checking screen size:", window.innerWidth);
+      setIsSmallScreen(window.innerWidth < 500);
+    };
+
+    // Check on mount
+    checkScreenSize();
+
+    // Add event listener for window resize
+    window.addEventListener("resize", checkScreenSize);
+
+    // Cleanup event listener on unmount
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
+  const filteredAndSortedItems = filterAndSortItems(items, filter, searchInput);
 
   const onDelete = (id: string) => {
     setItems((prevItems: ShoppingItem[]) =>
@@ -21,7 +40,7 @@ export default function List() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    addItem(input, setItems, setInput);
+    addItem(listItemInput, setItems, setListItemInput);
   };
 
   const onToggleComplete = (id: string) => {
@@ -34,12 +53,23 @@ export default function List() {
 
   return (
     <div className="app-container">
-      <div className="filter-container">
-        <Filter currentFilter={filter} onFilterChange={setFilter} />
+      <div className={`tool-bar ${isSmallScreen ? "small" : ""}`}>
+        {!isSmallScreen && (
+          <div className="search-container">
+            <SearchBar
+              searchInput={searchInput}
+              setSearchInput={setSearchInput}
+            />
+          </div>
+        )}
+
+        <div className="filter-container">
+          <Filter currentFilter={filter} onFilterChange={setFilter} />
+        </div>
       </div>
 
       <div className="list-container">
-        {items.length === 0 ? (
+        {filteredAndSortedItems.length === 0 ? (
           <p>{messages.emptyList}</p>
         ) : (
           <div className="todo-list">
@@ -56,8 +86,8 @@ export default function List() {
 
       <form onSubmit={onSubmit} className="form-container">
         <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
+          value={listItemInput}
+          onChange={(e) => setListItemInput(e.target.value)}
           placeholder={messages.inputPlaceholder}
           className="add-input"
         />

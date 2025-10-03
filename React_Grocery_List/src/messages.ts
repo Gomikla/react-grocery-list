@@ -7,4 +7,5 @@ export const messages = {
   emptyList: "No items in the list",
   inputPlaceholder: "Add a new item",
   addButton: "Add",
+  searchPlaceholder: "Search items...",
 };
