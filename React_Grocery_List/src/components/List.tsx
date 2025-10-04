@@ -16,7 +16,6 @@ export default function List() {
 
   useEffect(() => {
     const checkScreenSize = () => {
-      console.log("Checking screen size:", window.innerWidth);
       setIsSmallScreen(window.innerWidth < 500);
     };
 
