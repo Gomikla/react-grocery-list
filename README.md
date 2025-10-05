@@ -58,6 +58,7 @@ src/
 
 - Smooth animations for reordering
 - Edit existing todos
+- Integrate with a backend/database for persistent storage
 
 **AI Usage:**
 

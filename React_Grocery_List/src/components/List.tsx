@@ -13,6 +13,7 @@ export default function List() {
   const [filter, setFilter] = useState(FilterType.All);
   const [searchInput, setSearchInput] = useState("");
   const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [inputError, setInputError] = useState("");
 
   useEffect(() => {
     const checkScreenSize = () => {
@@ -39,7 +40,8 @@ export default function List() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    addItem(listItemInput, setItems, setListItemInput);
+    const errorMsg = addItem(listItemInput, setItems, setListItemInput);
+    setInputError(errorMsg ?? "");
   };
 
   const onToggleComplete = (id: string) => {
@@ -90,6 +92,9 @@ export default function List() {
           placeholder={messages.inputPlaceholder}
           className="add-input"
         />
+        {inputError && (
+          <p className="input-error-message">{inputError}</p>
+        )}
         <button type="submit" className="add-btn">
           {messages.addButton}
         </button>

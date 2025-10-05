@@ -14,13 +14,11 @@ export const addItem = (
   };
 
   if (!trimmedInput) {
-    alert(messages.emptyInputAlert);
-    return;
+    return messages.emptyInputAlert;
   }
 
   if (trimmedInput.length > 50) {
-    alert(messages.longInputAlert);
-    return;
+    return messages.longInputAlert;
   }
 
   setItems((prevItems: ShoppingItem[]) => [newItem, ...prevItems]);
